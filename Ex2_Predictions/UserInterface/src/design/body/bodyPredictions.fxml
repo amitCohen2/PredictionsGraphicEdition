@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.GridView?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" minHeight="600.0" minViewportHeight="600.0" minViewportWidth="900.0" minWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="design.body.BodyController">
+   <content>
+      <TabPane fx:id="tabPane" minHeight="630.0" minWidth="900.0" prefHeight="684.0" prefWidth="1259.0" stylesheets="@bodyStyle.css" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="detailsTab" onSelectionChanged="#detailsTabSelectionChangedListener" text="Details">
+               <content>
+                  <AnchorPane fx:id="detailsAnchorPane" minHeight="200.0" minWidth="500.0" prefHeight="684.0" prefWidth="1259.0">
+                     <children>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="-3.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="341.0" prefWidth="949.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-3.0">
+                           <content>
+                              <GridPane fx:id="detailsGridPane" focusTraversable="true" minWidth="700.0" prefHeight="587.0" prefWidth="1256.0">
+                                  <styleClass>
+                                      <String fx:value="styleTab" />
+                                  </styleClass>
+                                 <columnConstraints>
+                                    <ColumnConstraints fx:id="detailsColumnConstraints1" hgrow="ALWAYS" maxWidth="467.0" minWidth="10.0" prefWidth="240.0" />
+                                    <ColumnConstraints fx:id="detailsColumnConstraints2" hgrow="ALWAYS" maxWidth="633.0" minWidth="10.0" prefWidth="240.0" />
+                                    <ColumnConstraints fx:id="detailsColumnConstraints3" hgrow="ALWAYS" maxWidth="633.0" minWidth="10.0" prefWidth="240.0" />
+                                    <ColumnConstraints fx:id="detailsColumnConstraints4" hgrow="ALWAYS" maxWidth="633.0" minWidth="10.0" prefWidth="240.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="647.0" minHeight="10.0" prefHeight="638.0" vgrow="ALWAYS" />
+                                 </rowConstraints>
+                                 <children>
+                                    <TreeView fx:id="treeViewEnvironments" prefHeight="573.0" prefWidth="315.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                    <TreeView fx:id="treeViewEntities" prefHeight="652.0" prefWidth="314.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                    <TreeView fx:id="treeViewRules" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                    <TreeView fx:id="treeViewOther" prefHeight="295.0" prefWidth="232.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                                 </children>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="newExecutionTab" disable="true" onSelectionChanged="#newExecutionTabSelectionChangedListener" text="New Execution">
+                <styleClass>
+                    <String fx:value="styleTab" />
+                </styleClass>
+               <content>
+                  <AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="684.0" prefWidth="1259.0">
+                     <children>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="-1.0" minHeight="600.0" minViewportHeight="600.0" minViewportWidth="900.0" minWidth="900.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="-1.0">
+                           <content>
+                              <GridPane minHeight="600.0" minWidth="900.0" prefHeight="276.0" prefWidth="868.0">
+                                  <styleClass>
+                                      <String fx:value="styleTab" />
+                                  </styleClass>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="730.0" minWidth="10.0" prefWidth="275.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="730.0" minWidth="0.0" prefWidth="11.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="710.0" minWidth="10.0" prefWidth="663.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="304.0" minHeight="10.0" prefHeight="34.0" valignment="CENTER" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="531.0" minHeight="10.0" prefHeight="517.0" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="241.0" minHeight="10.0" prefHeight="27.0" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="66.0" minHeight="0.0" prefHeight="27.0" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="49.0" minHeight="0.0" prefHeight="39.0" />
+                                 </rowConstraints>
+                                 <children>
+                                    <GridView GridPane.rowIndex="1" />
+                                    <GridPane GridPane.rowIndex="1">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <GridPane GridPane.halignment="LEFT" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <GridPane fx:id="gridEntitiesPopulation" gridLinesVisible="true" prefWidth="275.0">
+                                                  <columnConstraints>
+                                                      <ColumnConstraints hgrow="NEVER" maxWidth="131.0" minWidth="3.0" prefWidth="122.0" />
+                                                      <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="264.0" minWidth="0.0" prefWidth="94.0" />
+                                                      <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="264.0" minWidth="10.0" prefWidth="40.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="266.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="55.0" text="Entities" GridPane.halignment="CENTER" />
+                                                      <Label prefHeight="21.0" prefWidth="38.0" text="Input" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                      <Label text="check" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets left="5.0" />
+                                             </GridPane.margin>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                    <AnchorPane minWidth="250.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <children>
+                                          <Label minWidth="250.0" text="Choose your Entities Population:" AnchorPane.topAnchor="0.0">
+                                             <padding>
+                                                <Insets left="10.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <children>
+                                          <Label minWidth="250.0" text="Choose your Environments Variables:" AnchorPane.topAnchor="0.0">
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </AnchorPane>
+                                    <GridPane fx:id="gridEnvironmentsUserInput" gridLinesVisible="true" prefHeight="248.0" prefWidth="631.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                      <columnConstraints>
+                                          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="221.0" minWidth="0.0" prefWidth="172.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="596.0" minWidth="10.0" prefWidth="317.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="596.0" minWidth="0.0" prefWidth="124.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="596.0" minWidth="10.0" prefWidth="52.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints fx:id="GridPaneRow" maxHeight="30.0" minHeight="10.0" prefHeight="266.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label contentDisplay="CENTER" text="Environments" GridPane.halignment="CENTER" />
+                                          <Label contentDisplay="CENTER" text="Environment Details" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Label prefHeight="21.0" prefWidth="46.0" text="Input" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                          <Label text="check" GridPane.columnIndex="3" />
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets right="5.0" />
+                                       </GridPane.margin>
+                                    </GridPane>
+                                    <GridPane prefHeight="20.0" prefWidth="275.0" GridPane.rowIndex="2">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="258.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="populationAmountLeftLabel" prefHeight="21.0" prefWidth="245.0" GridPane.halignment="CENTER">
+                                             <GridPane.margin>
+                                                <Insets left="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                    <GridPane GridPane.rowIndex="4">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="80.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="195.0" />
+                                      </columnConstraints>
+                                       <children>
+                                          <Button fx:id="clearButton" mnemonicParsing="false" onMouseClicked="#clearMouseClickListener" text="Clear" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="randomFillButton" mnemonicParsing="false" onMouseClicked="#OnRandomFillButtonMouseClicked" prefHeight="31.0" prefWidth="106.0" text="Random Fill" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                       <rowConstraints>
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                       </rowConstraints>
+                                    </GridPane>
+                                    <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints />
+                                          <ColumnConstraints />
+                                          <ColumnConstraints />
+                                          <ColumnConstraints />
+                                          <ColumnConstraints />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                      </rowConstraints>
+                                       <children>
+                                           <CheckBox fx:id="animation" mnemonicParsing="false" onMouseClicked="#onMouseClickedCheckAnimation" prefHeight="60.0" prefWidth="160.0" text="Animation on" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" right="10.0" />
+                                             </GridPane.margin>
+                                          </CheckBox>
+                                           <CheckBox fx:id="ChecksimulationBefore" mnemonicParsing="false" onMouseClicked="#onMouseClickedChecksimulationBefore" prefHeight="60.0" prefWidth="160.0" text="Save Simulation History" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                               <GridPane.margin>
+                                                   <Insets bottom="10.0" right="10.0" />
+                                               </GridPane.margin>
+                                           </CheckBox>
+                                          <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#startMouseClickListener" prefHeight="49.0" prefWidth="57.0" text="Start!" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" right="10.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="checkButton" mnemonicParsing="false" onMouseClicked="#onMouseClickCheck" text="Check" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" right="10.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="resultsTab" disable="true" onSelectionChanged="#resultsTabSelectionChangedListener" text="Results">
+                <styleClass>
+                    <String fx:value="styleTab" />
+                </styleClass>
+               <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="600.0" minViewportHeight="600.0" minViewportWidth="900.0" minWidth="900.0" prefHeight="0.0" prefWidth="0.0">
+                     <content>
+                        <AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="684.0" prefWidth="1259.0">
+                           <children>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="1.0" layoutY="-4.0" minHeight="600.0" minViewportHeight="600.0" minViewportWidth="900.0" minWidth="900.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-4.0">
+                                 <content>
+                                    <HBox>
+      
+                                       <children>
+                                          <VBox prefHeight="349.0" prefWidth="484.0" HBox.hgrow="ALWAYS">
+                                              <styleClass>
+                                                  <String fx:value="styleTab" />
+                                              </styleClass>
+                                             <children>
+                                                <ListView fx:id="listExecutionsView" minHeight="200.0" minWidth="300.0" onMouseClicked="#onMouseClickedListExecutionsView" prefHeight="423.0" prefWidth="190.0" VBox.vgrow="ALWAYS" />
+      
+                                             </children>
+                                          </VBox>
+                                          <GridPane fx:id="simulationGrid" minHeight="600.0" minWidth="900.0" prefHeight="690.0" prefWidth="949.0" HBox.hgrow="ALWAYS">
+      
+                                              <styleClass>
+                                                  <String fx:value="styleTab" />
+                                              </styleClass>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+      
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="405.0" minHeight="10.0" prefHeight="365.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="409.0" minHeight="10.0" prefHeight="285.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <GridPane fx:id="simulationProgressGrid" prefHeight="349.0" prefWidth="861.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                                                    <styleClass>
+                                                        <String fx:value="styleTab" />
+                                                    </styleClass>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+      
+                                                    <RowConstraints />
+                                                    <RowConstraints />
+                                                      <RowConstraints />
+                                                      <RowConstraints maxHeight="127.0" minHeight="7.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="144.0" minHeight="5.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="251.0" minHeight="10.0" prefHeight="247.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label fx:id="executionResultTitle" prefHeight="21.0" prefWidth="242.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                      <GridPane fx:id="ExecResultGridPane" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                                                          <styleClass>
+                                                              <String fx:value="styleTab" />
+                                                          </styleClass>
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="274.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="674.0" minWidth="10.0" prefWidth="174.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="674.0" minWidth="10.0" prefWidth="371.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <TableView fx:id="resultsEntityTableView" minWidth="500.0" prefHeight="242.0" prefWidth="568.0" GridPane.columnIndex="1">
+                                                               <columns>
+                                                                  <TableColumn fx:id="entityColumn" editable="false" prefWidth="189.0" text="Entity" />
+                                                               </columns>
+                                                            </TableView>
+                                                            <TableView fx:id="resultsPropertyTableView" onMouseClicked="#onMouseClickedPropertyChartResult" prefHeight="154.0" prefWidth="311.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                               <columns>
+                                                                  <TableColumn fx:id="propertyColumn" editable="false" prefWidth="140.0" text="Property" />
+                                                                  <TableColumn fx:id="consistencyColumn" editable="false" prefWidth="122.0" text="consistency" />
+                                                                  <TableColumn fx:id="averageColumn" editable="false" prefWidth="108.0" text="Average" />
+                                                               </columns>
+                                                            </TableView>
+                                                            <GridPane fx:id="gridButtonsResultSimulation" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                  <RowConstraints maxHeight="209.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints maxHeight="209.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints maxHeight="108.0" minHeight="5.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <Button fx:id="entitiesPopulationHistoryButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedEntitiesPopulationHistory" text="Entities Population History Chart" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                                                     <GridPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" />
+                                                                     </GridPane.margin>
+                                                                  </Button>
+                                                                  <Button fx:id="reloadSameSimulationDetailsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedReloadSameSimulationDetails" text="Reload simulation with same values" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                                                     <GridPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" />
+                                                                     </GridPane.margin>
+                                                                  </Button>
+                                                                  <Label fx:id="simulationFileResultLabel" prefHeight="21.0" prefWidth="261.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                                                                     <GridPane.margin>
+                                                                        <Insets bottom="10.0" left="10.0" />
+                                                                     </GridPane.margin>
+                                                                  </Label>
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </GridPane>
+                                                      <Separator prefWidth="200.0" GridPane.rowIndex="2" />
+                                                   </children>
+                                                </GridPane>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints maxHeight="177.0" minHeight="8.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="325.0" minHeight="10.0" prefHeight="312.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Label fx:id="simulationResultsLabel" prefHeight="21.0" prefWidth="124.0" text="Simulation " GridPane.halignment="CENTER" />
+                                                      <GridPane GridPane.rowIndex="1">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="861.0" minWidth="0.0" prefWidth="861.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints maxHeight="106.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="169.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <GridPane prefHeight="104.0" prefWidth="782.0" GridPane.halignment="CENTER">
+                                                              <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="117.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="130.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="145.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="113.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="371.0" minWidth="10.0" prefWidth="154.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="123.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="104.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <Button fx:id="stopBResultsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedStopButton" text="Stop" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                                  <Button fx:id="pauseResultsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedPauseButton" text="pause" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                                  <Button fx:id="resumeResultsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedResumeButton" text="resume" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                                  <Button fx:id="tickBeforeResultsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedTickBeforeButton" text="Tick Before" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets />
+                                                                     </GridPane.margin>
+                                                                  </Button>
+                                                                  <Button fx:id="tickAfterResultsButton" mnemonicParsing="false" onMouseClicked="#onMouseClickedTickAfterButton" text="Tick After" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets />
+                                                                     </GridPane.margin>
+                                                                  </Button>
+                                                               </children>
+                                                            </GridPane>
+                                                            <GridPane GridPane.rowIndex="2">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="192.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="202.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.0" minWidth="10.0" prefWidth="225.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                            </GridPane>
+                                                            <GridPane GridPane.rowIndex="1">
+                                                              <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                              </columnConstraints>
+                                                              <rowConstraints>
+                                                                <RowConstraints maxHeight="97.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                              </rowConstraints>
+                                                               <children>
+                                                                  <GridPane>
+                                                                    <columnConstraints>
+                                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="297.0" />
+                                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="640.0" minWidth="10.0" prefWidth="564.0" />
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                    </rowConstraints>
+                                                                     <children>
+                                                                        <Label fx:id="tickCounterResultsLabel" prefHeight="21.0" prefWidth="193.0" text="Tick Counter: " GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                                                           <GridPane.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </GridPane.margin>
+                                                                        </Label>
+                                                                        <Label fx:id="SecondsCounterResultsLabel" prefHeight="21.0" prefWidth="201.0" text="Seconds Counter: " GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                                                           <GridPane.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </GridPane.margin>
+                                                                        </Label>
+                                                                        <Label fx:id="ExecutionResulatsStatusLabel" prefHeight="21.0" prefWidth="246.0" text="Execution Status: " GridPane.halignment="LEFT">
+                                                                           <GridPane.margin>
+                                                                              <Insets left="10.0" />
+                                                                           </GridPane.margin>
+                                                                        </Label>
+                                                                     </children>
+                                                                  </GridPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </GridPane>
+                                       </children>
+                                    </HBox>
+      
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+             <Tab fx:id="StyleTab" onSelectionChanged="#StyleTabSelectionChangedListener" text="Style">
+                 <styleClass>
+                     <String fx:value="styleTab" />
+                 </styleClass>
+                 <content>
+                     <GridPane fx:id="StyleGridPane">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="600.0" minViewportHeight="600.0" minViewportWidth="900.0" minWidth="900.0">
+                     <content>
+                         <GridPane fx:id="StyleGridPaneIn">
+                           <AnchorPane minHeight="600.0" minWidth="900.0" prefHeight="684.0" prefWidth="1259.0">
+            
+                               <children>
+                                   <Slider fx:id="slider1" layoutX="94.0" layoutY="41.0" prefHeight="14.0" prefWidth="735.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="447.0" />
+                                   <Slider fx:id="slider2" layoutX="94.0" layoutY="105.0" prefHeight="14.0" prefWidth="735.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="447.0" />
+                                   <Slider fx:id="slider3" layoutX="94.0" layoutY="164.0" prefHeight="14.0" prefWidth="735.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="447.0" />
+                                   <Slider fx:id="slider4" layoutX="94.0" layoutY="230.0" prefHeight="14.0" prefWidth="735.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="447.0" />
+                                   <Slider fx:id="slider5" layoutX="94.0" layoutY="296.0" prefHeight="14.0" prefWidth="735.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="447.0" />
+                                   <TextField fx:id="textField1" layoutX="833.0" layoutY="33.0" AnchorPane.rightAnchor="256.0" />
+                                   <TextField fx:id="textField2" layoutX="833.0" layoutY="99.0" AnchorPane.rightAnchor="256.0" />
+                                   <TextField fx:id="textField3" layoutX="833.0" layoutY="158.0" AnchorPane.rightAnchor="256.0" />
+                                   <TextField fx:id="textField4" layoutX="833.0" layoutY="224.0" AnchorPane.rightAnchor="256.0" />
+                                   <TextField fx:id="textField5" layoutX="833.0" layoutY="290.0" AnchorPane.rightAnchor="256.0" />
+                                   <Label fx:id="redLabel" layoutX="22.0" layoutY="33.0" text="Red" textFill="#eb0101" AnchorPane.leftAnchor="22.0">
+                                       <font>
+                                           <Font size="20.0" />
+                                       </font>
+                                   </Label>
+                                   <Label fx:id="greenLabel" layoutX="22.0" layoutY="97.0" text="Green" textFill="#03fc56">
+                                       <font>
+                                           <Font size="20.0" />
+                                       </font>
+                                   </Label>
+                                   <Label fx:id="blueLabel" layoutX="22.0" layoutY="156.0" text="Blue" textFill="#020bff" AnchorPane.leftAnchor="22.0">
+                                       <font>
+                                           <Font size="20.0" />
+                                       </font>
+                                   </Label>
+                                   <Label fx:id="alphaLabel" layoutX="26.0" layoutY="222.0" text="Alpha" textFill="#181315" AnchorPane.leftAnchor="22.0">
+                                       <font>
+                                           <Font size="18.0" />
+                                       </font>
+                                   </Label>
+                                   <Label fx:id="textSizeLabel" layoutX="22.0" layoutY="288.0" text="Text Size" textFill="#181315" AnchorPane.leftAnchor="22.0">
+                                       <font>
+                                           <Font size="18.0" />
+                                       </font>
+                                   </Label>
+                               </children>
+            
+                           </AnchorPane>
+                              <columnConstraints>
+                                 <ColumnConstraints />
+                              </columnConstraints>
+                              <rowConstraints>
+                                 <RowConstraints />
+                              </rowConstraints>
+                         </GridPane>
+                     </content>
+                  </ScrollPane>
+                     <columnConstraints>
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                     </rowConstraints>
+                     </GridPane>
+                 </content>
+
+             </Tab>
+         </tabs>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TabPane>
+   </content>
+</ScrollPane>

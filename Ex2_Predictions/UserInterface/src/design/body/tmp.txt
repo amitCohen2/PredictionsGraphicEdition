@@ -1,0 +1,481 @@
+package design.body;
+
+import SystemLogic.history.imp.HistoryArchive;
+import XmlLoader.XmlLoader;
+import XmlLoader.exceptions.FileFormatException;
+import XmlLoader.schema.*;
+import XmlRunner.XmlRunner;
+import design.body.execution.details.imp.EnvironmentValuesFromUser;
+import design.app.AppController;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.HPos;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Pair;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BodyController {
+
+    private final String stepper = "Stepper";
+    private final String predictions = "Predictions";
+    final private StringProperty titleValue = new SimpleStringProperty();
+    public StringProperty headerValueProperty() {
+        return titleValue;
+    }
+
+    private TreeItem<String> environments;
+
+    private PRDWorld world;
+
+    private Map<String, Object> EnvMap;
+
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    private Tab detailsTab;
+
+    @FXML
+    private Tab newExecutionTab;
+
+    @FXML
+    private Tab resultsTab;
+    @FXML
+    private TreeView<String> treeViewEnvironments;
+
+    @FXML
+    private TreeView<String> treeViewEntities;
+
+    @FXML
+    private TreeView<String> treeViewRules;
+    @FXML
+    private TreeView<String> treeViewOther;
+    private AppController mainController;
+
+    @FXML
+    private GridPane gridEntitiesPopulation;
+    @FXML
+    private GridPane gridEnvironmentsUserInput;
+
+    @FXML
+    private Label populationAmountLeftLabel;
+
+    @FXML
+    private Button clearButton;
+    @FXML
+    private Button startButton;
+
+
+    private Map<String, Pair<TextField, CheckBox>> entityToTextFieldCheckBox;
+    private Map<String, Pair<Object, CheckBox>> environmentsToTextFieldCheckBox;
+
+    private SimpleIntegerProperty populationAmount;
+
+    public BodyController() {
+        EnvMap = new HashMap<>();
+        populationAmount = new SimpleIntegerProperty(0);
+
+    }
+    @FXML
+    private void initialize() {
+        populationAmountLeftLabel.textProperty().bind(Bindings.concat("Population input left: ", Bindings.format("%,d", populationAmount)));
+    }
+
+    private void updateStartButtonState() {
+        // Check if all entity CheckBoxes are selected
+        boolean allEntitySelected = entityToTextFieldCheckBox.values().stream()
+                .allMatch(pair -> pair.getValue().isSelected());
+
+        // Check if all environments CheckBoxes are selected
+        boolean allEnvironmentsSelected = environmentsToTextFieldCheckBox.values().stream()
+                .allMatch(pair -> pair.getValue().isSelected());
+
+        // Enable the start button if all CheckBoxes in both maps are selected
+        startButton.setDisable(!(allEntitySelected && allEnvironmentsSelected));
+    }
+
+
+
+    @FXML
+    void clearMouseClickListener(MouseEvent event) {
+
+    }
+
+    @FXML
+    void detailsTabSelectionChangedListener(Event event) {
+            titleValue.set(predictions);
+    }
+
+    @FXML
+    void newExecutionTabSelectionChangedListener(Event event) {
+        titleValue.set(stepper);
+    }
+
+    @FXML
+    void resultsTabSelectionChangedListener(Event event) {
+        titleValue.set(stepper);
+    }
+
+    @FXML
+    void returnMouseClickedListener(MouseEvent event) {
+
+    }
+
+    @FXML
+    void startMouseClickListener(MouseEvent event) {
+        XmlRunner xmlRunner = new XmlRunner();
+      Map <String, EnvironmentValuesFromUser> valuesFromUser = new HashMap<>();
+        for (Map.Entry<String, Object> entry : EnvMap.entrySet()) {
+            String envName = entry.getKey();
+            EnvironmentValuesFromUser envValues =new EnvironmentValuesFromUser();
+            envValues.setName(envName);
+            envValues.setValue(entry.getValue());
+            envValues.setType(entry.getValue().getClass().getName().toString());
+            envValues.setValueFromUser(true);
+            // Store the user values in a map
+            valuesFromUser.put(envName, envValues);
+        }
+
+        HistoryArchive historyArchive= new HistoryArchive();
+        xmlRunner.initRunSimulation(1,historyArchive,world);
+       xmlRunner.Run(valuesFromUser);
+    }
+
+    public void setMainController(AppController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setDetailsPage(XmlLoader xmlLoader) throws FileFormatException, IllegalArgumentException {
+         world = xmlLoader.loadXmlData();
+        // simulationDetails - help to check the file format if wrong
+        SimulationDetails simulationDetails = new SimulationDetails();
+
+        // init tree views
+         environments = TreeViewDetails.setEnvironmentsDetails(world, simulationDetails);
+        TreeItem<String> entities = TreeViewDetails.setEntitiesDetails(world, simulationDetails);
+        TreeItem<String> rules = TreeViewDetails.setRulesDetails(world, simulationDetails);
+        TreeItem<String> others = TreeViewDetails.setOtherDetails(world, simulationDetails);
+
+        // set tree views
+        treeViewEntities.setRoot(environments);
+        treeViewEnvironments.setRoot(entities);
+        treeViewRules.setRoot(rules);
+        treeViewOther.setRoot(others);
+        
+        initNewExecutionPage(world);
+    }
+
+    private   TreeItem<String> getEnvTree(){
+        return environments;
+    }
+
+    private void initNewExecutionPage(PRDWorld world) {
+        
+        // open this Tab 
+        if (newExecutionTab.isDisable()) {
+            newExecutionTab.setDisable(false);
+        }
+
+        initSimulationEntitiesPopulationNewExecutionPage(world);
+        initSimulationEnvironments(world);
+    }
+
+    private void initSimulationEntitiesPopulationNewExecutionPage(PRDWorld world) {
+        entityToTextFieldCheckBox = new HashMap<>();
+
+        final int[] rowIndex = {1}, colIndex = {0};
+        int population = getPopulationNumber(world);
+        //set the population amount
+        populationAmount.set(population);
+
+        world.getPRDEntities().getPRDEntity().forEach(entity -> {
+            String entityName = entity.getName();
+            //set entity label
+            Label currEntityLabel = new Label(entityName);
+            gridEntitiesPopulation.add(currEntityLabel, colIndex[0], rowIndex[0]);
+            gridEnvironmentsUserInput.setHalignment(currEntityLabel, HPos.CENTER);
+
+            // set text field and checkboxes
+            TextField textField = new TextField();
+            gridEntitiesPopulation.add( textField, colIndex[0] + 1, rowIndex[0]);
+            CheckBox checkBox = new CheckBox();
+            entityToTextFieldCheckBox.put(entityName, new Pair<>(textField, checkBox));
+            gridEntitiesPopulation.add(checkBox, colIndex[0] + 2, rowIndex[0]);
+            gridEnvironmentsUserInput.setHalignment(checkBox, HPos.CENTER);
+            // set binds and listeners between checkboxes and text fields
+            setBindsBetweenCheckBoxesAndTextField(textField, checkBox, null);
+
+            rowIndex[0]++;
+        });
+
+        entityToTextFieldCheckBox.values().forEach(pair -> {
+            CheckBox checkBox = pair.getValue();
+            TextField textField = pair.getKey();
+            checkBox.setOnAction(event ->  {
+                updateStartButtonState();
+            });
+        });
+    }
+
+    private int getPopulationNumber(PRDWorld world) {
+        return world.getPRDGrid().getColumns() * world.getPRDGrid().getRows();
+    }
+
+
+    private void checkIfDoubleInput(String newValue, TextField textField, BooleanProperty correctTextField, PRDEnvProperty environment) {
+        try {
+            double inputNumber = Double.parseDouble(newValue);
+           if (isInsideRange(inputNumber, environment)) {
+                correctTextField.set(true);
+                EnvMap.put(environment.getPRDName(),inputNumber);
+                textField.setStyle("-fx-background-color: #8ecae6;");
+
+            } else {
+                textField.setStyle("-fx-background-color: pink;"); // Invalid input
+                correctTextField.set(false);
+            }
+        } catch (NumberFormatException e) {
+            textField.setStyle("-fx-background-color: pink;"); // Invalid input
+            correctTextField.set(false);
+        }
+    }
+
+    private boolean isInsideRange(double inputNumber, PRDEnvProperty environment) {
+        if (environment.getPRDRange() != null) {
+            double from = environment.getPRDRange().getFrom();
+            double to = environment.getPRDRange().getTo();
+
+            //my swap function
+            if (from > to) {
+                double tmp = from;
+                from = to;
+                to = tmp;
+            }
+
+            if (inputNumber > to || inputNumber < from) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    private void AddListenerBetweenPopulationAmountToTextField(TextField textField, BooleanProperty correctTextField, CheckBox checkBox) {
+        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            int inputNumber = Integer.parseInt(textField.getText());
+            if (checkBox.isSelected()) {
+                textField.setStyle("-fx-background-color: #8ecae6;");
+                populationAmount.set(populationAmount.get() - inputNumber);
+            }
+            else {
+                populationAmount.set(populationAmount.get() + inputNumber);
+            }
+        });
+    }
+
+    private void setListenerForTextField(BooleanProperty correctTextField, CheckBox checkBox, TextField textField) {
+        // Listener to handle ENTER key press
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                if (correctTextField.get()) {
+                    textField.setEditable(false);
+                    checkBox.setSelected(true);
+                }
+            }
+        });
+    }
+
+    private void setConnectionBetweenCheckBoxAndTextField(CheckBox checkBox, TextField textField, BooleanProperty checkBoxDisabled) {
+        //bind between check Checkbox to editable TextField
+        checkBox.setOnAction(e -> {
+            if (checkBox.isSelected()) {
+                checkBoxDisabled.set(false);
+                textField.setEditable(false);
+                textField.setStyle("-fx-background-color: #8ecae6;");
+            } else {
+                checkBoxDisabled.set(true);
+                textField.setEditable(true);
+                textField.setStyle("-fx-background-color: white;");
+            }
+        });
+    }
+
+    private void checkIfIntegerInput(String newValue, TextField textField, BooleanProperty correctTextField) {
+        try {
+            int inputNumber = Integer.parseInt(newValue);
+            if (isCorrectPopulationAmountInput(inputNumber)) {
+                correctTextField.set(true);
+                textField.setStyle("-fx-background-color: white;"); // Valid input
+            } else {
+                textField.setStyle("-fx-background-color: pink;"); // Invalid input
+                correctTextField.set(false);
+            }
+        } catch (NumberFormatException e) {
+            textField.setStyle("-fx-background-color: pink;"); // Invalid input
+            correctTextField.set(false);
+        }
+    }
+
+    private boolean isCorrectPopulationAmountInput(int inputNumber) {
+        return inputNumber >= 0 && inputNumber <= populationAmount.get();
+    }
+
+    private void initSimulationEnvironments(PRDWorld world) {
+        environmentsToTextFieldCheckBox = new HashMap<>();
+
+        final int[] rowIndex = {1}, colIndex = {0};
+        world.getPRDEnvironment().getPRDEnvProperty().forEach(environment -> {
+            String environmentName = environment.getPRDName();
+            //set environment variable
+            Label environmentLabel = new Label(environmentName);
+            environmentLabel.setPadding(new Insets(0, 0, 0, 10));
+            gridEnvironmentsUserInput.add(environmentLabel, colIndex[0], rowIndex[0]);
+            gridEnvironmentsUserInput.setHalignment(environmentLabel, HPos.CENTER);
+
+            //set environment instructions ( type and range )
+            Label environmentInputInstructions = getEnvironmentInputInstructions(environment);
+            gridEnvironmentsUserInput.add(environmentInputInstructions, colIndex[0] + 1, rowIndex[0]);
+            gridEnvironmentsUserInput.setHalignment(environmentInputInstructions, HPos.CENTER);
+
+            //set the checkbox
+            CheckBox checkBox = new CheckBox();
+            gridEnvironmentsUserInput.add(checkBox, colIndex[0] + 3, rowIndex[0]);
+            environmentLabel.setPadding(new Insets(0, 10, 0, 10));
+            if (environment.getType().equals("boolean")) {
+                ComboBox<String> comboBox = getNewBooleanComboBox();
+                gridEnvironmentsUserInput.add(comboBox, colIndex[0] + 2, rowIndex[0]);
+                setBindsBetweenCheckBoxesAndComboBox(comboBox, checkBox, environment);
+                environmentsToTextFieldCheckBox.put(environmentName, new Pair<>(comboBox, checkBox));
+            }
+            else {
+                // set text field and checkboxes
+                TextField textField = new TextField();
+                gridEnvironmentsUserInput.add(textField, colIndex[0] + 2, rowIndex[0]);
+                setBindsBetweenCheckBoxesAndTextField(textField, checkBox, environment);
+                environmentsToTextFieldCheckBox.put(environmentName, new Pair<>(textField, checkBox));
+            }
+
+            rowIndex[0]++;
+
+
+        });
+
+        //set the checkboxes Actions
+        environmentsToTextFieldCheckBox.values().forEach(pair -> {
+            CheckBox checkBox = pair.getValue();
+            checkBox.setOnAction(event -> updateStartButtonState());
+        });
+
+
+    }
+
+    private void setBindsBetweenCheckBoxesAndComboBox(ComboBox<String> comboBox, CheckBox checkBox, PRDEnvProperty environment) {
+        BooleanProperty correctComboBoxChoose = new SimpleBooleanProperty(false);
+        BooleanProperty checkBoxDisabled = new SimpleBooleanProperty(true);
+
+        // Bind the intermediate property to the correctTextField property
+        checkBoxDisabled.bind(correctComboBoxChoose.not());
+        // Bind the checkbox's disable property to the intermediate property
+        checkBox.disableProperty().bind(checkBoxDisabled);
+
+        comboBox.setOnAction(event -> {
+            String selectedValue = comboBox.getValue();
+            if ("True".equals(selectedValue) || "False".equals(selectedValue)) {
+                if("False".equals(selectedValue)){
+                    EnvMap.put(environment.getPRDName(),false);
+                }else{
+                    EnvMap.put(environment.getPRDName(),true);
+                }
+
+                correctComboBoxChoose.set(true); // Enable the CheckBox
+            }
+
+        });
+
+        //bind between check ComboBox to CheckBox
+        checkBox.setOnAction(e -> {
+            if (checkBox.isSelected()) {
+                checkBoxDisabled.set(false);
+                comboBox.setStyle("-fx-background-color: #8ecae6;");
+            } else {
+                checkBoxDisabled.set(true);
+                comboBox.setStyle("-fx-background-color: white;");
+            }
+        });
+    }
+    private void setBindsBetweenCheckBoxesAndTextField(TextField textField, CheckBox checkBox, PRDEnvProperty environment) {
+        BooleanProperty correctTextField = new SimpleBooleanProperty(false);
+        BooleanProperty checkBoxDisabled = new SimpleBooleanProperty(true);
+
+        // Bind the intermediate property to the correctTextField property
+        checkBoxDisabled.bind(correctTextField.not());
+        // Bind the checkbox's disable property to the intermediate property
+        checkBox.disableProperty().bind(checkBoxDisabled);
+
+        if (environment == null) { // Binds for entities!
+            // Listener to update correctTextField based on the text field's text
+            textField.textProperty().addListener((observable, oldValue, newValue) ->
+                    checkIfIntegerInput(newValue, textField, correctTextField));
+            setListenerForTextField(correctTextField, checkBox, textField);
+            AddListenerBetweenPopulationAmountToTextField(textField, correctTextField, checkBox);
+            checkBox.setOnAction(event ->  {
+                updateStartButtonState();
+                setConnectionBetweenCheckBoxAndTextField(checkBox, textField, checkBoxDisabled);
+            });
+        } else  { // set binds for environment variables
+            if (environment.getType().equals("float")) {
+                textField.textProperty().addListener((observable, oldValue, newValue) ->
+                        checkIfDoubleInput(newValue, textField, correctTextField, environment));
+                setListenerForTextField(correctTextField, checkBox, textField);
+                setConnectionBetweenCheckBoxAndTextField(checkBox, textField, checkBoxDisabled);
+            } else if (environment.getType().equals("string")) {
+                correctTextField.set(true);
+                EnvMap.put(environment.getPRDName(),textField.getText());
+                setListenerForTextField(correctTextField, checkBox, textField);
+                setConnectionBetweenCheckBoxAndTextField(checkBox, textField, checkBoxDisabled);
+
+            } else {
+                throw new IllegalArgumentException("This Environment Type '" + environment.getType() + "' does not supported!");
+            }
+        }
+
+
+    }
+
+
+    private ComboBox<String> getNewBooleanComboBox() {
+
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll("True", "False"); // Add your options here
+        comboBox.setMaxWidth(Double.MAX_VALUE);
+
+        VBox vbox = new VBox(10);
+        vbox.getChildren().add(comboBox);
+
+        return comboBox;
+    }
+
+    private Label getEnvironmentInputInstructions(PRDEnvProperty environment) {
+        Label result = new Label();
+        StringBuilder instructions = new StringBuilder();
+        instructions.append("Type: ").append(environment.getType()).append("  |  ").append("Range: ");
+        if (environment.getPRDRange() != null) {
+            instructions.append("[").append(environment.getPRDRange().getFrom()).append(" ,").append(environment.getPRDRange().getTo()).append("]");
+        } else {
+            instructions.append("no range");
+        }
+
+        result.setText(instructions.toString());
+        return result;
+    }
+
+}

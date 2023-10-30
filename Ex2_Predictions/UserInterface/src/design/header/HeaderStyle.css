@@ -1,0 +1,18 @@
+.header-label#headerTitle {
+    -fx-text-fill: #306ea4;
+    -fx-font-size: 28px;
+    -fx-font-weight: BOLD;
+}
+
+.queue-management-labels {
+    -fx-text-fill: #3A606E;
+    -fx-font-size: 16px;
+}
+
+.queue-management-labels#queueManagementLabel {
+    -fx-font-weight: BOLD;
+    -fx-font-size: 18px;
+
+}
+
+

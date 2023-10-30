@@ -1,0 +1,37 @@
+/*#tabPane {
+    -fx-background-color: rgba(197, 175, 167, 0.68); !* Change the background color of the TabPane *!
+}
+.details-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7); !* Change the background color of the Details tab with alpha *!
+}
+.details-grid-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-grid-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.newExecutionTab-grid-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.newExecutionTab-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-HBox-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-VBox-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-simulationProgressGrid-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}
+.resultsTab-ExecResultGridPane-tab {
+    -fx-background-color: rgba(255, 87, 51, 0.7);
+}*/
+/*
+.style-tab {
+    -fx-background-color: rgba(197, 175, 167, 0.68);
+}*/
