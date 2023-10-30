@@ -70,6 +70,16 @@ The system is designed to facilitate the creation and execution of simulations t
 
 Completed
 
+<h2>Game App</h2>
+
+<div align="center">
+
+![](static/images/details.png)<br>
+![](static/images/executions.png)
+![](static/images/results1.png)
+![](static/images/results2.png)
+
+</div>
 
 <h2>Credits</h2>
 
