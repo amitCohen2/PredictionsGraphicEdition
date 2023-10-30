@@ -43,9 +43,9 @@ The system is designed to facilitate the creation and execution of simulations t
 - Scene Builder
 
 <h2>Upgrades from Consule Edition</h2>
-1. Logic expansion - add actions and functions for simulation running.
-2. Graphic design.
-3. Parallel Programming - running several simulations at the same timeץ
+1. Logic expansion - add actions and functions for simulation running
+2. Graphic design
+3. Parallel Programming - running several simulations at the same time
 
 <h2>How to Run a Simulation?</h2>
 
